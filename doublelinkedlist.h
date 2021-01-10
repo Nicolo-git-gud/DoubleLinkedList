@@ -30,7 +30,7 @@ void DoubleLinkedList_reverse_print(DoubleLinkedList *l);
 void DoubleLinkedList_recoursive_print(DoubleLinkedList *l);
 void DoubleLinkedList_print_reverse(DoubleLinkedList *l);
 DoubleLinkedList *DoubleLinkedList_Merge(DoubleLinkedList *A, DoubleLinkedList *B);
-
+DoubleLinkedList * DoubleLinkedList_from_array(int a[], int c);
 
 
 

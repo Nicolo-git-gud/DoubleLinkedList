@@ -134,3 +134,25 @@ DoubleLinkedList *DoubleLinkedList_Merge(DoubleLinkedList *A, DoubleLinkedList *
 }
 
 
+DoubleLinkedList * DoubleLinkedList_from_array(int a[], int c){
+    DoubleLinkedList *l= DoubleLinkedList_new();
+    if (c==0)
+        return l;
+    Cell *Cur = new Cell;
+    Cur->value = a[0];
+    Cur-> next = nullptr;
+    Cur->prev = nullptr;
+    l -> head = Cur;
+    for (int i=1; i < c; i++){
+        Cell *aux  =  new Cell;
+        aux->value = a[i];
+        aux->next = nullptr;
+        aux->prev = Cur;
+        Cur -> next = aux;
+        Cur = aux;
+        l->tail = aux;
+    }
+    l -> lenght = c;
+
+    return l;
+}
