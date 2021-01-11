@@ -46,6 +46,38 @@ void DoubleLinkedList_pushback(DoubleLinkedList *l, int x){
     
 }
 
+void DoubleLinkedList_pushback_without_tail(DoubleLinkedList *l, int x){
+    
+    if(l->head==nullptr){
+        Cell *primo = new Cell;
+        primo->value = x;
+        primo->next = nullptr;
+        primo->prev = nullptr;
+        l->head = primo;
+        l->lenght = 1;//lo lascio solo per non fottere la lista;
+        l->tail = primo;
+        
+        return;
+    }
+    Cell *prev = l->head;
+    Cell *cur = new Cell;
+    cur->value = x;
+    cur->next = nullptr;
+    if(l->head->next == nullptr)
+        cur->prev = l->head;
+    else{
+        while(prev->next != nullptr)
+            prev = prev->next;
+    }
+    cur->prev = prev;
+    prev->next = cur;
+
+    l->lenght++;
+    
+    
+}
+
+
 void DoubleLinkedList_pushfront(DoubleLinkedList *l,int v){
     Cell *aux = new Cell;
     aux->value = v;
@@ -199,7 +231,7 @@ DoubleLinkedList * DoubleLinkedList_from_array(int a[], int c){
         return l;
     Cell *Cur = new Cell;
     Cur->value = a[0];
-    Cur-> next = nullptr;
+    Cur->next = nullptr;
     Cur->prev = nullptr;
     l -> head = Cur;
     for (int i=1; i < c; i++){

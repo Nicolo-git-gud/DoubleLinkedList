@@ -36,6 +36,6 @@ int * array_from_list(DoubleLinkedList *l);
 void DoubleLinkedList_pushfront(DoubleLinkedList *l,int v);
 int DoubleLinkedList_popfront(DoubleLinkedList *l);
 DoubleLinkedList *DoubleLinkedList_Merge_With_Copy(DoubleLinkedList *A, DoubleLinkedList *B);
-
+void DoubleLinkedList_pushback_without_tail(DoubleLinkedList *l, int x);
 
 #endif 
