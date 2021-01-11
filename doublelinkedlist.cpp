@@ -23,7 +23,7 @@ void DoubleLinkedList_delete(DoubleLinkedList *l){
     delete l;
 }
 void DoubleLinkedList_pushback(DoubleLinkedList *l, int x){
-
+    
     if(l->head==nullptr){
         Cell *primo = new Cell;
         primo->value = x;
@@ -32,35 +32,81 @@ void DoubleLinkedList_pushback(DoubleLinkedList *l, int x){
         l->head = primo;
         l->lenght = 1;
         l->tail = primo;
-    
+        
         return;
     }
     Cell *cur = new Cell;
     cur->value = x;
     cur->next = nullptr;
-    if(l->lenght==1)
-        cur->prev = l->head;
-    else
-        cur->prev = l->tail;
+    cur->prev = l->tail;
     l->tail->next = cur;
     l->tail = cur;
     l->lenght++;
     
-        
+    
 }
 
-void  DoubleLinkedList_print(DoubleLinkedList *l){
+void DoubleLinkedList_pushfront(DoubleLinkedList *l,int v){
+    Cell *aux = new Cell;
+    aux->value = v;
+    aux->next = l->head;
+    aux->prev = nullptr;
+    if(l->head != nullptr)//Altro, si ho fatto dopo questo che il pop, tapullo 
+    l->head->prev = aux;
+    l->head = aux;
+    l->lenght ++;
+}
+int DoubleLinkedList_popback(DoubleLinkedList *l){
+  if(l->head==nullptr){
+        std::string err = "lista vuota";
+        throw err;
+    }
+    
+    if(l->lenght==1){
+        int value = l->head->value;
+        Cell *unico = l->head;
+        l->head = nullptr;
+        l->tail = nullptr;
+        delete unico;
+        l->lenght--;
+        return value;
+    }
+    Cell *cur = l->tail;
+    int value = cur -> value;
+    l->tail = l->tail->prev;
+    l->tail-> next = nullptr;
+    delete cur;
+    l->lenght--;
+    return value;
+}
+int DoubleLinkedList_popfront(DoubleLinkedList *l){
+    if(l->head==nullptr){
+        std::string err = "lista vuota";
+        throw err;
+    }
+
+    Cell *cur = l->head;
+    int value = cur -> value;
+    l->head = l->head->next;
+    if(l->head != nullptr)//Questo mi sembra un tapullo ma non saprei come fare sennò a non causare una write su nullptr, e mi sembra forse meglio che scrivere un if l->lenght == 1
+    l->head->prev = nullptr;
+    delete cur;
+    l->lenght--;
+    return value;
+}
+
+void DoubleLinkedList_print(DoubleLinkedList *l){
     Cell *aux = l->head;
     while(aux != nullptr){
-    std::cout << aux->value << std::endl;
-    aux = aux->next;
+        std::cout << aux->value << std::endl;
+        aux = aux->next;
     }
 }
 void DoubleLinkedList_print_reverse(DoubleLinkedList *l){
     Cell *rev = l->tail;
     while(rev != nullptr){
         std::cout << rev->value << std::endl;
-    rev = rev->prev;
+        rev = rev->prev;
     }
 }
 
@@ -133,6 +179,19 @@ DoubleLinkedList *DoubleLinkedList_Merge(DoubleLinkedList *A, DoubleLinkedList *
     }
 }
 
+DoubleLinkedList *DoubleLinkedList_Merge_With_Copy(DoubleLinkedList *A, DoubleLinkedList *B){
+  if(A->head == nullptr)
+      return DoubleLinkedList_copy(B);
+  if(B->head == nullptr)
+      return DoubleLinkedList_copy(A);
+    DoubleLinkedList *Merge = DoubleLinkedList_copy(A);
+    DoubleLinkedList *copia2 = DoubleLinkedList_copy(B);
+    Merge->tail->next = copia2->head;
+    copia2->head->prev = Merge->tail;
+    Merge->tail = copia2->tail;
+    delete copia2;
+    return Merge;
+}
 
 DoubleLinkedList * DoubleLinkedList_from_array(int a[], int c){
     DoubleLinkedList *l= DoubleLinkedList_new();
@@ -155,4 +214,47 @@ DoubleLinkedList * DoubleLinkedList_from_array(int a[], int c){
     l -> lenght = c;
 
     return l;
+}
+
+
+int * array_from_list(DoubleLinkedList *l){
+   if(l->head==nullptr){
+       int *b=new int[0];
+       return b;
+   }
+    int n = l-> lenght;
+    int *b = new int[n];
+    Cell *cur = l-> head;
+    for(int i=0;i<n;i++){
+        b[i] = cur-> value;
+        cur = cur->next;
+    }
+    return b;
+}
+
+DoubleLinkedList *DoubleLinkedList_copy (DoubleLinkedList *l){
+    if (l->head==nullptr){
+        return DoubleLinkedList_new();
+    }
+    DoubleLinkedList *b = DoubleLinkedList_new();
+    Cell *copia = l->head;
+    Cell *current = new Cell;
+    current->prev = nullptr;
+    current->value = l->head->value;
+    current->next = nullptr;
+    b->head = current;
+    copia = copia->next;
+    while(copia != nullptr){
+        
+        Cell *Aux = new Cell;
+        Aux->value = copia->value;
+        Aux->next = nullptr;
+        Aux->prev = current;
+        current->next = Aux;
+        current = Aux;
+        copia = copia->next;
+    }
+    b->lenght = l->lenght;
+    b->tail = current;
+    return b;
 }

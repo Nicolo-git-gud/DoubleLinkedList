@@ -1,8 +1,7 @@
-#include <assert.h>
 #include "doublelinkedlist.h"
 #include <iostream>
 #include <string>
-
+#include <assert.h>
 int main(){
     DoubleLinkedList *q = DoubleLinkedList_new();
     DoubleLinkedList *f = DoubleLinkedList_new();
@@ -12,33 +11,24 @@ int main(){
     DoubleLinkedList_pushback(q,7);
     std::cout << "Eseguo la stampa normale" << std::endl;
     DoubleLinkedList_print(q);
-    std::cout << "Eseguo la stampa reverse" << std::endl;
-    DoubleLinkedList_print_reverse(q);
     DoubleLinkedList *p = DoubleLinkedList_new();
     DoubleLinkedList_pushback(p,8);
     DoubleLinkedList_pushback(p,9);
     DoubleLinkedList_pushback(p,10);
     std::cout << "Provo la print per il merge" << std::endl;
-    DoubleLinkedList *merge = DoubleLinkedList_Merge(q,p);
-    DoubleLinkedList *merge2 = DoubleLinkedList_Merge(q,f);
-    DoubleLinkedList *merge3 = DoubleLinkedList_Merge(f,q);
+    DoubleLinkedList *merge = DoubleLinkedList_Merge_With_Copy(q,p);//HO fatto tutte le prove q,f f,q e q e p(merge completo),p e q(merge completo ma invertito) ma per velocità ho cambiato solo dentro la parentesi;
+    
+    
+    
+    
+    DoubleLinkedList_delete(q);
+    
     DoubleLinkedList_delete(f);
     DoubleLinkedList_delete(p);
-    DoubleLinkedList_delete(q);
     DoubleLinkedList_print(merge);
     std::cout << "Provo la reverse print per il merge" << std::endl;
     DoubleLinkedList_print_reverse(merge);
     
-    std::cout << "Provo la print per il merge2" << std::endl;
-    DoubleLinkedList_print(merge2);
-    std::cout << "Provo la reverse print per il merge2" << std::endl;
-    DoubleLinkedList_print_reverse(merge2);
-     
-    std::cout << "Provo la print per il merge3" << std::endl;
-    DoubleLinkedList_print(merge3);
-    std::cout << "Provo la reverse print per il merge3" << std::endl;
-    DoubleLinkedList_print_reverse(merge3);
     DoubleLinkedList_delete(merge);
-    DoubleLinkedList_delete(merge2);
-    DoubleLinkedList_delete(merge3);
+    
 }
