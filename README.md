@@ -1,4 +1,1 @@
-# DoubleLinkedList
-Ho fatto le cose base e il merge, mi andava di fare il merge perché mi era venuto il dubbio su come sistemare prev, visto che poi la copia l'ho già fatta nel Merge mi mancano le funzioni che sono abbastanza simili se non uguali.
-Ho fatto  anche la lista da array per essere sicuro di aver capito come gestire il prev(con la print reverse controllo sempre non ci siano problemi):
-Il resto lo faccio oggi
+La domanda che ho cancellato ieri era come fare un pushback senza usare la tail per impostare in modo facile il prev, dopo averlo fatto come esercizio e averlo testato 10 volte per poi capire che la stampa reverse usa la tail l'ho testato con c++ tutor e ho messo lo screenshot
